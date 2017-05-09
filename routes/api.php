@@ -14,3 +14,4 @@ use Illuminate\Http\Request;
 */
 
 Route::any('{path?}', 'MainController@index')->where("path", ".+");
+Route::resource('categories', 'CategoriesController');
