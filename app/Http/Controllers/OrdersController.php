@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Order;
+use Response;
+use Purifier;
 
 class OrdersController extends Controller
 {
   public function index()
   {
-    $orders = Orders::all();
+    $orders = Order::all();
 
     return Response::json($orders)
   }
@@ -39,12 +43,34 @@ class OrdersController extends Controller
     }
 
     $order = new Order;
-    $order->title = $request->input('title');
-    $order->body = $request->input('body');
-    $article->title = $request->input('title');
-    $article->body = $request->input('body');
+    $order->userID = $request->input('userID');
+    $order->productID = $request->input('productID');
+    $order->amount = $request->input('amount');
+    $order->totalPrice = $request->input('totalPrice');
+    $order->comment = $request->input('comment');
+
+    $order->save();
+
+    return Response::json(['success' => 'successful']);
 
   }
+  public function show($id)
+  {
+    $order = Order::find($id);
+
+    return Response::json($order);
+  }
+  //Delete a single Articles
+  public function destroy($id)
+  {
+    $order = Order::find($id);
+
+    $order->delete();
+
+    return Response::json(['success' => 'Deleted Article.']);
+  }
+
+}
 
 
 }

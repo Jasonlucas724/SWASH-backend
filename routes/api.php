@@ -13,11 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::any('{path?}', 'MainController@index')->where("path", ".+");
+Route::any('{path?}', 'UsersController@index')->where("path", ".+");
 Route::post('signUp', 'UsersController@signUp');
 Route::post('signIn', 'UsersController@signIn');
-Route::any('{path?}', 'UsersController@index')->where("path", ".+");
-Route::get('categories', 'CategoriesController@index');
-Route::get('categories', 'CategoriesController@show');
-Route::post('categories', 'CategoriesController@store');
-Route::get('categories', 'CategoriesController@update');
+Route::get('getCategory', 'CategoriesController@index');
+Route::get('showCategory', 'CategoriesController@show');
+Route::post('storeCategory', 'CategoriesController@store');
+Route::get('updateCategory', 'CategoriesController@update');
