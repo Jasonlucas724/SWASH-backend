@@ -53,7 +53,7 @@ class UsersController extends Controller
     $validator = Validator::make(Purifier::clean($request->all()), $rules)
     if ($validator->fails())
     {
-      return Response::json(['error' => "Sorry you've mispelled something."]);
+      return Response::json(['error' => "Sorry, you've mispelled something."]);
     }
     $email=$request->input('email');
     $password=$request->input('password');
