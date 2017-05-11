@@ -15,6 +15,12 @@ class OrdersController extends Controller
     $orders = Order::all();
 
     return Response::json($orders)
+
+    $order = Auth::user();
+    if($order->roleID ! = 1)
+    {
+      return Response::json(['error' => 'Not Allowed']);.0
+    }
   }
 
   public function store(Request $request)

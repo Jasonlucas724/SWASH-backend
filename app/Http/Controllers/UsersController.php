@@ -17,6 +17,7 @@ class UsersController extends Controller
   public function signUp(Request $request)
    {
 
+
      $rules = [
        'name' => 'recquired',
        'email' => 'required',
@@ -47,10 +48,10 @@ class UsersController extends Controller
   public function signIn(Request $request)
   {
     $rules =[
-      'email' => 'required'
-      'password' => 'required'
+      'email' => 'required',
+      'password' => 'required',
     ];
-    $validator = Validator::make(Purifier::clean($request->all()), $rules)
+    $validator = Validator::make(Purifier::clean($request->all()), $rules);
     if ($validator->fails())
     {
       return Response::json(['error' => "Sorry, you've mispelled something."]);

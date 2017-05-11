@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Category;
+use Response;
+use Purifier;
+use Hash;
+use JWTAuth;
+use File;
 
 class CategoriesController extends Controller
 {
