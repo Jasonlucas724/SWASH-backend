@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Roles;
+use App\Role;
 use Response;
 use Purifier;
 
@@ -13,7 +13,7 @@ class RolesController extends Controller
 
   public function index()
   {
-    $Roles = Role::all();
+    $roles = Role::all();
 
     return Response::json($roles);
   }
@@ -39,7 +39,7 @@ class RolesController extends Controller
 
     return Response::json(['success' => 'Congrats! You did it.']);
   }
-  
+
   public function update($id, Request $request)
   {
 
