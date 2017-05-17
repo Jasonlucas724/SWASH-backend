@@ -13,13 +13,14 @@ use File;
 
 class UsersController extends Controller
 {
+  
 
   public function signUp(Request $request)
    {
 
 
      $rules = [
-       'name' => 'recquired',
+       'name' => 'required',
        'email' => 'required',
        'password' => 'required',
      ];
@@ -39,6 +40,7 @@ class UsersController extends Controller
    $user->name = $request->input('name');
    $user->email = $request->input('email');
    $user->password = Hash::make($request->input('password'));
+   $user->roleID = 2;
 
    $user->save();
 

@@ -28,11 +28,12 @@ class RolesController extends Controller
 
     if($validator->fails())
     {
+
       return Response::json(["error" => "You need to fill out all fields."]);
     }
 
     $role = new Role;
-    $role->title = $request->input('title');
+    $role->name = $request->input('name');
 
 
     $role->save();
@@ -42,20 +43,30 @@ class RolesController extends Controller
 
   public function update($id, Request $request)
   {
+    $rules = [
+      'name' => 'required',
+      ];
+    $validator = Validator::make(Purifier::clean($request->all()), $rules);
+
+    if($validator->fails())
+    {
+      return Response::json(["error" => "You need to fill out all fields."]);
+    }
 
     $role = Role::find($id);
 
 
-    $role->title = $request->input('name');
+    $role->name = $request->input('name');
 
-    $article->save();
+    $role->save();
 
 
-    return Response::json(["success" => "Article Updated"]);
+    return Response::json(["success" => "Role Updated"]);
   }
 
   public function show($id)
   {
+
     $role = Role::find($id);
 
     return Response::json($role);
@@ -67,7 +78,7 @@ class RolesController extends Controller
 
     $role->delete();
 
-    return Response::json(['success' => 'Deleted Article.']);
+    return Response::json(['success' => 'Deleted Role.']);
   }
 
 }

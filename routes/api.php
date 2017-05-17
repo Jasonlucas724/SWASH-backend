@@ -26,8 +26,8 @@ Route::post('deleteCategory/{id}', 'CategoriesController@delete');
 Route::get('getRole', 'RolesController@index');
 Route::get('showRole/{id}', 'RolesController@show');
 Route::post('storeRole', 'RolesController@store');
-Route::get('updateRole/{id}', 'RolesController@update');
-Route::post('deleteRole/{id}', 'RolesController@delete');
+Route::post('updateRole/{id}', 'RolesController@update');
+Route::post('deleteRole/{id}', 'RolesController@destroy');
 
 Route::get('getOrder', 'OrdersController@index');
 Route::get('showOrder/{id}', 'OrdersController@show');

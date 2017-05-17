@@ -10,9 +10,15 @@ use Purifier;
 use Hash;
 use JWTAuth;
 use File;
+use Auth;
 
 class CategoriesController extends Controller
 {
+  public function __construct()
+{
+    $this->middleware("jwt.auth", ["only" => ["store", "update", "destroy"]]);
+}
+
   public function index()
   {
     $categories = Category::all();
@@ -31,10 +37,15 @@ class CategoriesController extends Controller
       {
         return Response::json(["error" => "You need to fill out a category."]);
       }
-      $categorgy = new Category;
+      $user = Auth::user();
+      if($user->roleID != 1)
+      {
+        return Response::json(['error' => 'Not Authorized']);
+      }
+      $category = new Category;
       $category->name = $request->input('name');
 
-      $catergory->save();
+      $category->save();
 
       return Response::json(['success' => 'You did it.']);
   }

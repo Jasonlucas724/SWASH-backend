@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-  //List of Articles
+  public function __construct()
+{
+    $this->middleware("jwt.auth", ["only" => ["store", "update", "destroy"]]);
+}
+
   public function index()
   {
     $products = Product::all();
@@ -17,19 +21,31 @@ class ProductsController extends Controller
   public function store(Request $request)
   {
     $rules = [
-      'title' => 'required',
-      'body' => 'required',
+      'name' => 'required',
+      'description' => 'required',
       'image' => 'required',
+      'price' => 'required',
+      'categoryID' => 'required',
+      'availibility' => 'required',
     ];
 
     $validator = Validator::make(Purifier::clean($request->all()), $rules);
 
     if($validator->fails())
     {
-      return Response::json(["error" => "You need to fill out all fields."$product
-    $product = new Article;
-    $product->title = $request->input('title');
-    $product->body = $request->input('body');
+      return Response::json(["error" => "You need to fill out all fields."
+    }
+    $user = Auth::user();
+    if($user->roleID != 1)
+    {
+      return Response::json(['error' => 'Not Authorized']);
+    }
+    $product = new Product;
+    $product->name = $request->input('name');
+    $product->description = $request->input('description');
+    $product->price = $request->input('price');
+    $product->categoryID = $request->input('category');
+    $product->availibility = $request->input('availibility');
 
     $image = $request->file('image');
     $imageName = $image->getClientOriginalName();
@@ -39,6 +55,7 @@ class ProductsController extends Controller
     $product->save();
 
     return Response::json(['success' => 'Congrats! You did it.']);
+
   }
   //Update our Articles.
   public function update($id, Request $request)
@@ -46,8 +63,13 @@ class ProductsController extends Controller
     //Finds a specific Article based on ID.
     $product = Product::find($id);
 
+    $user = Auth::user();
+    if($user->roleID != 1)
+    {
+      return Response::json(['error' => 'Not Authorized']);
+    }
     //Saves the Title
-    $product->title = $request->input('title');
+    $product->name = $request->input('title');
     //Saves the Body
     $product->body = $request->input('body');
 
