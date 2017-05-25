@@ -16,6 +16,7 @@ class OrdersController extends Controller
 }
   public function index()
   {
+    $orders = Order::join("users", "orders.userID", "=", "user.id")
     $orders = Order::all();
 
     return Response::json($orders)
